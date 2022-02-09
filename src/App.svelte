@@ -1,19 +1,37 @@
 <script>
+	import { fade } from 'svelte/transition';
 	let name = '...';
+	let checked;
 	$: isMark = name.toUpperCase() === 'MARK';
+
 </script>
 
-<main>
-	<h1>Hello <span class:highlight={isMark}>{name}</span>!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-	<input bind:value={name} />
-</main>
+<div class="greeter">
+	<h1 class="greeter__h1"  >Hello <span class:highlight={isMark}>{name}</span>!</h1>
+	<p class="paragraph greeter__p">Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+
+	<input 
+		type="text" 
+		class="greeter__input" 
+		bind:value={name}
+	/>
+	<input 
+		type="checkbox"
+		class="greeter__input greeter__checkbox" 
+		bind:checked
+	/>
+
+	{#if checked}
+		<div transition:fade={{duration: 300}} class="checked-box">now you see me</div>
+	{/if}
+
+</div>
 
 <style>
-	main {
+	.greeter {
 		text-align: center;
 		padding: 1em;
-		max-width: 240px;
+		max-width: 60vw;
 		margin: 0 auto;
 	}
 
@@ -28,9 +46,4 @@
 		color: blue;
 	}
 
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
 </style>
